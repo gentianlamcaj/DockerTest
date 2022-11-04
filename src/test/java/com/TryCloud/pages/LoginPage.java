@@ -20,4 +20,12 @@ public class LoginPage {
     @FindBy (id = "submit-form")
     public WebElement loginButton;
 
+    public void login(String username, String password) {
+
+        usernameInput.sendKeys(username);
+        passwordInput.sendKeys(password);
+        loginButton.click();
+
+    }
+
 }
