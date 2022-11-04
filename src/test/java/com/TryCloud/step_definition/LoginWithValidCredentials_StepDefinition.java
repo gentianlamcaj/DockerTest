@@ -30,7 +30,6 @@ public class LoginWithValidCredentials_StepDefinition {
     }
     @Then("verify the user should be at the dashboard page")
     public void verify_the_user_should_be_at_the_dashboard_page() {
-        //wait.until(ExpectedConditions.visibilityOfAllElements());
         Assert.assertTrue(Driver.getDriver().getTitle().contains("Dashboard"));
     }
 
