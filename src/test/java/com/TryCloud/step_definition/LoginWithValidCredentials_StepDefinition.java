@@ -7,13 +7,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginWithValidCredentials_StepDefinition {
 
     LoginPage loginPage = new LoginPage();
-    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 10);
 
     @Given("user on the login page")
     public void user_on_the_login_page() {
