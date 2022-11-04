@@ -8,7 +8,7 @@ Feature: As a user, I should be able to login
     Then verify the user should be at the dashboard page
 
     Examples:
-      | username | password    |
+      | username | passcode    |
       | user7    | Userpass123 |
       | user34   | Userpass123 |
       | user99   | Userpass123 |
