@@ -9,6 +9,7 @@ Feature: As a user, I should be able to login
 
     Examples:
       | username | password    |
-      | user7    | Userpass123 |
-      | user34   | Userpass123 |
-      | user99   | Userpass123 |
+      | user16   | Userpass123 |
+      | user46   | Userpass123 |
+      | user76   | Userpass123 |
+      | user106  | Userpass123 |
