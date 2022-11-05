@@ -13,6 +13,16 @@ public class BasePage {
     }
 
 
+    @FindBy(xpath = "//ul[@id='appmenu']/li/a")
+    public List<WebElement> mainModules;
 
+
+    public void clickAModuleFromMainModules(String string){
+        for (int i = 0; i < mainModules.size()-1; i++) {
+
+            if(mainModules.get(i).getAttribute("aria-label").equals(string)){
+                mainModules.get(i).click();}
+        }
+    }
 
     }
