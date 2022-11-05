@@ -60,7 +60,36 @@ public class BrowserUtils {
         return  actualOptions;
     }
 
+    /**
+     * Accept List<WebElement> and return List<String> of each text between opening and closing tags for that list of web elements
+     * @param webElementList
+     * @return List<String>
+     */
 
+    public static List<String> listOfWebElementsToListOfString(List<WebElement> webElementList){
+        List<String> webElementString= new ArrayList<>();
+        for(WebElement each: webElementList){
+            webElementString.add(getTextDynamic(each));
+        }
+        return webElementString;
+    }
+
+    /**
+     * Accept WebElement and return the text between opening and closing tags even for cases when getText() doesn't work
+     * @param webElement
+     * @return String
+     */
+    public static String getTextDynamic(WebElement webElement){
+        String webElementText=null;
+        webElementText=webElement.getText();
+        if(webElementText.equals("")){
+            webElementText=webElement.getAttribute("innerText");
+            if(webElementText.equals("")){
+                webElementText=webElement.getAttribute("textContent");
+            }
+        }
+        return webElementText;
+    }
 
 
 

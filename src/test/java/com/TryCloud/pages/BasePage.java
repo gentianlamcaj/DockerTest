@@ -9,7 +9,6 @@ import java.util.List;
 
 public class BasePage {
     public BasePage() {
-
         PageFactory.initElements(Driver.getDriver(), this);
     }
 
@@ -19,7 +18,6 @@ public class BasePage {
 
     public void clickAModuleFromMainModules(String string) {
         for (int i = 0; i < mainModules.size() - 1; i++) {
-
             if (mainModules.get(i).getAttribute("aria-label").equals(string)) {
                 mainModules.get(i).click();
             }

@@ -5,6 +5,7 @@ import com.TryCloud.pages.LoginPage;
 import com.TryCloud.utilities.BrowserUtils;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 
 import java.util.List;
 
@@ -20,8 +21,9 @@ public class MainModules_StepDefinition {
 
     @Then("Verify the user see the following modules:")
     public void verify_the_user_see_the_following_modules(List<String> expectedModules) {
-        List <String> actualModules= BrowserUtils.listOfWebElementsToListOfString(basePage.appMenu);
+        List <String> actualModules= BrowserUtils.listOfWebElementsToListOfString(basePage.mainModules);
         Assert.assertTrue(actualModules.containsAll(expectedModules));
+
 
     }
 }
