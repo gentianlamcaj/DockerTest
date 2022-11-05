@@ -1,5 +1,6 @@
 package com.TryCloud.pages;
 
+import com.TryCloud.utilities.ConfigurationReader;
 import com.TryCloud.utilities.Driver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,10 +21,10 @@ public class LoginPage {
     @FindBy (id = "submit-form")
     public WebElement loginButton;
 
-    public void login(String username, String password) {
+    public void login() {
 
-        usernameInput.sendKeys(username);
-        passwordInput.sendKeys(password);
+        usernameInput.sendKeys(ConfigurationReader.getProperty("username"));
+        passwordInput.sendKeys(ConfigurationReader.getProperty("password"));
         loginButton.click();
 
     }
