@@ -12,17 +12,7 @@ public class BasePage {
         PageFactory.initElements(Driver.getDriver(),this);
     }
 
-    @FindBy(xpath = "//ul[@id='appmenu']//a")
-    public List<WebElement> mainMenuList;
 
-
-    //not finished yet
-//    public void chooseFromMainMenu(String string) {
-//        for (WebElement each : mainMenuList) {
-//            if (each.getAttribute("aria-label").equalsIgnoreCase(string)) {
-//                each.click();
-//            }
-//        }
 
 
     }
