@@ -1,6 +1,6 @@
 node {
     stage('Clone code') {
-        git 'https://github.com/gentianlamcaj/demo-project.git'
+        git 'https://github.com/gentianlamcaj/JenkinsSGProjectDemo.git'
     }
 
     stage('Run tests'){
