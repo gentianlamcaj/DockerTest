@@ -1,11 +1,17 @@
 package com.TryCloud.utilities;
 
 import org.junit.Assert;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 public class BrowserUtils {
@@ -90,6 +96,57 @@ public class BrowserUtils {
         }
         return webElementText;
     }
+
+
+    public static Integer getTextToInt(WebElement webElement){
+        String str=getTextDynamic(webElement);
+        char [] ch =str.toCharArray();
+        String temp="";
+        for (int i = 0; i < ch.length; i++) {
+            if (Character.isDigit(ch[i])){
+                temp+=ch[i];
+            }
+        }
+        return Integer.parseInt(temp);
+
+    }
+
+    /**
+     * Accept a WebElement element and waits until invisibility of element for 20 seconds
+     * @param element
+     */
+    public static void waitUntilInvisibility(WebElement element){
+        WebDriverWait wait=new WebDriverWait(Driver.getDriver(), 20);
+        wait.until(ExpectedConditions.invisibilityOf(element));
+    }
+    public static void moveToElement(WebElement element){
+        Actions actions=new Actions(Driver.getDriver());
+        actions.moveToElement(element).contextClick().perform();
+    }
+
+    /**
+     * Accept a String argument and removes the extension from the file, example .pdf, .docx, .img
+     * @param file
+     * @return String
+     */
+    public static String removeExtensionFromFile(String file){
+        String str=file.substring(0, file.indexOf("c"));
+        return str;
+    }
+
+
+    public static boolean invisibilityOf(WebElement element)
+    {
+        try {
+            return !element.isDisplayed();
+        }catch(StaleElementReferenceException | NoSuchElementException e )
+        {
+            System.out.println("Element is stale or not found which means element is invisible.");
+            return true;
+        }
+    }
+
+
 
 
 

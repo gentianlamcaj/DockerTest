@@ -1,5 +1,6 @@
-@login
+@login @smoke
 Feature: As a user, I should be able to login
+
 
   Scenario Outline: Verify login with valid credentials
     Given user on the login page

@@ -24,4 +24,7 @@ public class BasePage {
         }
     }
 
+    @FindBy (xpath = "(//li[@data-id='files']//span[normalize-space()='Files'])[1]")
+    public WebElement files;
+
 }
