@@ -1,7 +1,7 @@
-@smoke
+
 Feature: As a user, I should be able to login
 
-
+  @smoke
   Scenario Outline: Verify login with valid credentials
     Given user on the login page
     When user use username "<username>" and passcode "<password>"
