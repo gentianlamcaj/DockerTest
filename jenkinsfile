@@ -1,6 +1,6 @@
 node {
     stage('Clone code') {
-        git 'https://github.com/gentianlamcaj/JenkinsSGProjectDemo.git'
+        git 'https://github.com/gentianlamcaj/TryCloudProjectMineJenkins.git'
     }
 
     stage('Run tests'){
