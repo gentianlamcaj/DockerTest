@@ -2,94 +2,112 @@ package com.TryCloud.utilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.safari.SafariDriver;
 
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class Driver {
+    static String browser;
 
-    private Driver(){}
+    private Driver() {
+    }
 
+    private static WebDriver driver;
 
-    private static InheritableThreadLocal<WebDriver> driverPool = new InheritableThreadLocal<>();;
-
-
-    public static WebDriver getDriver(){
-
-        if(driverPool.get() == null){
-            String browserType="";
-            if(System.getProperty("BROWSER")==null) {
-                 browserType = ConfigurationReader.getProperty("browser");
+    public static WebDriver getDriver() {
+        if (driver == null) {
+            if (System.getProperty("BROWSER") == null) {
+                browser = ConfigurationReader.getProperty("browser");
             } else {
-                 browserType = System.getProperty("BROWSER");
+                browser = System.getProperty("BROWSER");
             }
-
-            switch(browserType){
-                case "chrome":
-                    WebDriverManager.chromedriver().setup();
-                    driverPool.set(new ChromeDriver());
-                    driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-                    break;
-                case "firefox":
-                    WebDriverManager.firefoxdriver().setup();
-                    driverPool.set(new FirefoxDriver());
-                    driverPool.get().manage().window().maximize();
-                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-                    break;
-
-
-
+            System.out.println("Browser: " + browser);
+            switch (browser) {
                 case "remote-chrome":
                     try {
                         // assign your grid server address
-                        String gridAddress = "localhost"; //CHANGE IT TO YOU ip
-                        URL url = new URL("http://"+ gridAddress + ":4445/wd/hub");
+                        String gridAddress = "localhost";
+                        URL url = new URL("http://" + gridAddress + ":4445/wd/hub");
                         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
                         desiredCapabilities.setBrowserName("chrome");
-                        driverPool.set(new RemoteWebDriver(url, desiredCapabilities));
-                        //driverPool.set(new RemoteWebDriver(new URL("http://0.0.0.0:4444/wd/hub"),desiredCapabilities));
-
+                        driver = new RemoteWebDriver(url, desiredCapabilities);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;
                 case "remote-firefox":
+
                     try {
                         // assign your grid server address
                         String gridAddress = "localhost";
-                        URL url = new URL("http://"+ gridAddress + ":4445/wd/hub");
+                        URL url = new URL("http://" + gridAddress + ":4445/wd/hub");
                         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
                         desiredCapabilities.setBrowserName("firefox");
-                        driverPool.set(new RemoteWebDriver(url, desiredCapabilities));
-                        //driverPool.set(new RemoteWebDriver(new URL("http://0.0.0.0:4444/wd/hub"),desiredCapabilities));
-
+                        driver = new RemoteWebDriver(url, desiredCapabilities);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;
+                case "chrome":
+                    WebDriverManager.chromedriver().setup();
+                    driver = new ChromeDriver();
+                    break;
+                case "chrome-headless":
+                    WebDriverManager.chromedriver().setup();
+                    driver = new ChromeDriver(new ChromeOptions().setHeadless(true));
+                    break;
+                case "firefox":
+                    WebDriverManager.firefoxdriver().setup();
+                    driver = new FirefoxDriver();
+                    break;
+                case "firefox-headless":
+                    WebDriverManager.firefoxdriver().setup();
+                    driver = new FirefoxDriver(new FirefoxOptions().setHeadless(true));
+                    break;
+
+                case "ie":
+                    if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+                        throw new WebDriverException("Your operating system does not support the requested browser");
+                    }
+                    WebDriverManager.iedriver().setup();
+                    driver = new InternetExplorerDriver();
+                    break;
+
+                case "edge":
+                    if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+                        throw new WebDriverException("Your operating system does not support the requested browser");
+                    }
+                    WebDriverManager.edgedriver().setup();
+                    driver = new EdgeDriver();
+                    break;
+
+                case "safari":
+                    if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+                        throw new WebDriverException("Your operating system does not support the requested browser");
+                    }
+                    WebDriverManager.getInstance(SafariDriver.class).setup();
+                    driver = new SafariDriver();
+                    break;
             }
         }
 
-
-        return driverPool.get();
-
+        return driver;
     }
 
-    public static void closeDriver(){
-        if(driverPool.get() != null){
-            driverPool.get().quit();
-            driverPool.remove();
+    public static void closeDriver() {
+        if (driver != null) {
+            driver.quit();
+            driver = null;
         }
     }
-
-
-
-
-
-
 }

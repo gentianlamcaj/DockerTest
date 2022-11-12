@@ -1,4 +1,4 @@
-@login @smoke
+@smoke
 Feature: As a user, I should be able to login
 
 
